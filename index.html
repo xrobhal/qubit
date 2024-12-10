@@ -4,58 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qubit Simulator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f0f0f0;
-        }
-
-        .container {
-            margin-top: 20px;
-            text-align: center;
-            width: 80%;
-            max-width: 800px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .bloch-sphere, .probabilities {
-            margin-top: 20px;
-        }
-
-        button {
-            margin: 5px;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #4caf50;
-            color: white;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-2.9.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Qubit Simulator</h1>
-        <p id="state">State: |0⟩</p>
-        <div>
+        <p id="state">State: 1.00|0⟩ + 0.00|1⟩</p>
+        <div class="gates">
             <h3>Quantum Gates</h3>
-            <button onclick="applyGate('X')">X</button>
-            <button onclick="applyGate('Y')">Y</button>
-            <button onclick="applyGate('Z')">Z</button>
-            <button onclick="applyGate('H')">H</button>
+            <div class="gate-buttons">
+                <button class="gate-button" data-gate="X">X</button>
+                <button class="gate-button" data-gate="Y">Y</button>
+                <button class="gate-button" data-gate="Z">Z</button>
+                <button class="gate-button" data-gate="H">H</button>
+            </div>
+            <div id="tooltip" class="tooltip"></div>
         </div>
         <div class="probabilities">
             <h3>Measurement Probabilities</h3>
@@ -66,7 +31,6 @@
             <div id="bloch-sphere"></div>
         </div>
     </div>
-    <script src="https://cdn.plot.ly/plotly-2.9.0.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
