@@ -1,4 +1,4 @@
-// v0.0.3
+// v0.0.4 - Updated bloc sphere.
 let state = math.matrix([[1], [0]]); // Initial state |0⟩ as a column vector
 
 const GATES = {
@@ -47,7 +47,40 @@ function renderBlochSphere(alpha, beta) {
     const y = Math.sin(theta) * Math.sin(phi);
     const z = Math.cos(theta);
 
+    // Generate a faint blue sphere
+    const u = [];
+    const v = [];
+    for (let i = 0; i <= 30; i++) {
+        u.push((i * Math.PI) / 15); // theta values
+        v.push((i * 2 * Math.PI) / 30); // phi values
+    }
+
+    const xSphere = [];
+    const ySphere = [];
+    const zSphere = [];
+    for (let i = 0; i < u.length; i++) {
+        xSphere.push([]);
+        ySphere.push([]);
+        zSphere.push([]);
+        for (let j = 0; j < v.length; j++) {
+            xSphere[i].push(Math.sin(u[i]) * Math.cos(v[j]));
+            ySphere[i].push(Math.sin(u[i]) * Math.sin(v[j]));
+            zSphere[i].push(Math.cos(u[i]));
+        }
+    }
+
     const data = [
+        // The faint blue sphere
+        {
+            type: "surface",
+            x: xSphere,
+            y: ySphere,
+            z: zSphere,
+            opacity: 0.3,
+            colorscale: [[0, "lightblue"], [1, "lightblue"]],
+            showscale: false
+        },
+        // The qubit vector
         {
             type: "scatter3d",
             mode: "lines+markers",
@@ -70,6 +103,7 @@ function renderBlochSphere(alpha, beta) {
 
     Plotly.newPlot("bloch-sphere", data, layout);
 }
+
 
 // Add event listeners to buttons
 document.querySelectorAll(".gate-button").forEach(button => {
