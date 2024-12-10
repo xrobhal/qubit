@@ -1,4 +1,4 @@
-let state = math.complex([1, 0]); // Initial state |0⟩
+let state = math.matrix([[1], [0]]); // Initial state |0⟩ as a column vector
 
 const GATES = {
     X: math.matrix([[0, 1], [1, 0]]),
@@ -21,9 +21,9 @@ function applyGate(gateName) {
 }
 
 function updateUI() {
-    const prob0 = math.abs(state[0]) ** 2;
-    const prob1 = math.abs(state[1]) ** 2;
-    document.getElementById("state").textContent = `State: ${state[0].toFixed(2)}|0⟩ + ${state[1].toFixed(2)}|1⟩`;
+    const prob0 = math.abs(state.get([0, 0])) ** 2;
+    const prob1 = math.abs(state.get([1, 0])) ** 2;
+    document.getElementById("state").textContent = `State: ${state.get([0, 0]).toFixed(2)}|0⟩ + ${state.get([1, 0]).toFixed(2)}|1⟩`;
 
     document.getElementById("probabilities").innerHTML = `
         <p>|0⟩: ${(prob0 * 100).toFixed(2)}%</p>
@@ -34,8 +34,8 @@ function updateUI() {
 }
 
 function renderBlochSphere() {
-    const alpha = state[0];
-    const beta = state[1];
+    const alpha = state.get([0, 0]);
+    const beta = state.get([1, 0]);
 
     const theta = 2 * Math.acos(math.abs(alpha));
     const phi = math.arg(beta) - math.arg(alpha);
